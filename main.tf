@@ -15,14 +15,13 @@ resource "azurerm_web_application_firewall_policy" "this" {
       rule_type = try(custom_rules.value.rule_type, null)
 
       dynamic "match_conditions" {
-        for_each = try(custom_rules.value.match_conditions)
-
-        match_values       = try(match_conditions.value.match_values, null)
-        operator           = try(match_conditions.value.operator)
-        negation_condition = try(match_conditions.value.negation_condition, null)
-        transforms         = try(match_conditions.value.transforms, null)
+        for_each = try(custom_rules.value.match_conditions, [])
 
         content {
+          match_values       = try(match_conditions.value.match_values, [])
+          operator           = try(match_conditions.value.operator)
+          negation_condition = try(match_conditions.value.negation_condition, null)
+          transforms         = try(match_conditions.value.transforms, [])
           dynamic "match_variables" {
             for_each = try(match_conditions.value.match_variables)
 

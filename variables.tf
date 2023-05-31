@@ -45,3 +45,9 @@ variable "managed_rules" {
     }
   ]
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "(Optional) A mapping of tags to assign to the Web Application Firewall Policy."
+  default     = {}
+}
