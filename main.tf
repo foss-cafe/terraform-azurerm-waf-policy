@@ -43,11 +43,12 @@ resource "azurerm_web_application_firewall_policy" "this" {
     content {
       enabled                     = try(policy_settings.value.enabled, true)
       mode                        = try(policy_settings.value.mode, "Detection")
-      file_upload_limit_in_mb     = try(policy_settings.value.enabled, "100")
-      request_body_check          = try(policy_settings.value.enabled, true)
-      max_request_body_size_in_kb = try(policy_settings.value.enabled, "128")
+      file_upload_limit_in_mb     = try(policy_settings.value.file_upload_limit_in_mb, 100)
+      request_body_check          = try(policy_settings.value.request_body_check, true)
+      max_request_body_size_in_kb = try(policy_settings.value.max_request_body_size_in_kb, 128)
     }
   }
+
 
   dynamic "managed_rules" {
     for_each = var.managed_rules
